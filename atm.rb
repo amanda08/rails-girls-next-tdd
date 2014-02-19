@@ -1,17 +1,18 @@
 def withdraw(amount)
-  if amount <= 0 # this deals with some of the situations...
+  if amount <= 0 || amount%5!=0 # this deals with some of the situations...
     return false
   end
-  if amount%10==0
+
     result = []
-    while amount!=0
+    while amount>=10
       amount -= 10
       result << 10
     end
-    return result
-  else
-    return false
-  end
+    while amount>=5
+      amount -= 5
+      result << 5
+    end
+  return result
 end
 
 # import required testing libraries
@@ -26,9 +27,9 @@ describe 'atm' do
     [-1, false],
     [0, false],
     [7, false],
-    [45, false],
     [20, [10, 10]],
-    [40, [10, 10, 10, 10]],
+    [25, [10, 10, 5]],
+    [35, [10, 10, 10, 5]],
   ].each do |input, expected|
     it "should return #{expected} when $#{input} is withdrawn" do
       withdraw(input).must_equal expected
